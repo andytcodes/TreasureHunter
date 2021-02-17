@@ -19,20 +19,20 @@ public class CameraMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            x = m_speed * Time.deltaTime;
+            z = m_speed * Time.deltaTime;
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            x = -m_speed * Time.deltaTime;
+            z = -m_speed * Time.deltaTime;
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            z = m_speed * Time.deltaTime;
+            x = -m_speed * Time.deltaTime;
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            z = -m_speed * Time.deltaTime;
+            x = m_speed * Time.deltaTime;
         }
 
         Vector3 dir = new Vector3(x, y, z);
