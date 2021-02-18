@@ -6,27 +6,15 @@ using UnityEngine.SceneManagement;
 public class Movement : MonoBehaviour
 {
     public float m_speed;
-
     // Update is called once per frame
     void Update()
     {
         //WASD Movement
-        if (Input.GetKey(KeyCode.W)) 
-        {
-            this.transform.Translate(m_speed * Time.deltaTime, 0, 0);
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            this.transform.Translate(-m_speed * Time.deltaTime, 0, 0);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            this.transform.Translate(0, 0, -m_speed * Time.deltaTime);
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            this.transform.Translate(0, 0, m_speed * Time.deltaTime);
-        }
+        if (this.transform.position.y <= 18)
+            cubeMovement(2, m_speed);
+        else
+            cubeMovement(1, m_speed);
+        
 
         //Rotation
         if (Input.GetKeyUp(KeyCode.Q))
@@ -39,7 +27,6 @@ public class Movement : MonoBehaviour
         }
 
         //Collision Start
-        //TODO: Implement Winning and Losing Screen according to collision (With timer)
         GameObject treasureSphere = GameObject.Find("TreasureSphere");
         if (this.GetComponent<Collider>().bounds.Contains(treasureSphere.transform.position))
         {
@@ -47,6 +34,28 @@ public class Movement : MonoBehaviour
             treasureSphere.GetComponent<Renderer>().material.color = Color.green;
             SceneManager.LoadScene("WinScene");
         }
-        //if timer hits 0, show lose screen
+    }
+
+    //Function to determine if cube is in water or not and will adjust speed accordingly
+    public static void cubeMovement(int waterOrNot, float m_speed)
+    {
+        GameObject cube = GameObject.Find("Cube");
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            cube.transform.Translate(m_speed / waterOrNot * Time.deltaTime, 0, 0);
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            cube.transform.Translate(-m_speed / waterOrNot * Time.deltaTime, 0, 0);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            cube.transform.Translate(0, 0, -m_speed / waterOrNot * Time.deltaTime);
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            cube.transform.Translate(0, 0, m_speed / waterOrNot * Time.deltaTime);
+        }
     }
 }
